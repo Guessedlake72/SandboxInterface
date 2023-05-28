@@ -2,6 +2,8 @@ const loginForm = document.getElementById("login-form");
 const uploadForm = document.getElementById("upload-form");
 const loginButton = document.getElementById("login-form-submit");
 const uploadButton = document.getElementById("upload-form-submit");
+const uploadGlbButton = document.getElementById("upload-glb-submit");
+
 const loginErrorMsg = document.getElementById("login-error-msg");
 axios.defaults.headers.common = {
     "X-API-Key": "636af092e9a77f5984220834",  
