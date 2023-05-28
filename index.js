@@ -1,7 +1,6 @@
 const loginForm = document.getElementById("login-form");
-const uploadForm = document.getElementById("upload-form");
+const uploadForm = document.getElementById("upload-glb");
 const loginButton = document.getElementById("login-form-submit");
-const uploadButton = document.getElementById("upload-form-submit");
 const uploadGlbButton = document.getElementById("upload-glb-submit");
 
 const loginErrorMsg = document.getElementById("login-error-msg");
@@ -46,18 +45,24 @@ loginButton.addEventListener("click", (e) => {
     })
 })
 
-uploadButton.addEventListener("click", (e) => {
+
+uploadGlbButton.addEventListener("click", (e) => {
     // Prevent the default submission of the form
     e.preventDefault();
     // Get the values input by the user in the form fields
-    const userID = uploadForm.userID.value;
-    const src = uploadForm.src.value;
-    const type = uploadForm.type.value;
-
-    axios.post("https://vrsandbox-62fc.restdb.io/rest/assets", {
-        userID: userID,
-        src: src,
-        type: type
-        })
-    .then((response) => console.log(response.data))
+    const file = uploadForm.uploadfile.data;
+    let formData = new FormData();
+    formData.append("file", file);
+    axios.post('https://vrsandbox-62fc.restdb.io/rest/models', formData, {
+        headers: {
+          "Content-Type": "multipart/form-data",
+        }
+      }).then(response => {
+        const { sourceURL } = response.data; // Assuming the response contains the sourceURL field
+        console.log('File uploaded successfully');
+        console.log(response)
+      })
+      .catch(error => {
+        console.error('Error uploading file:', error);
+      });
 })
